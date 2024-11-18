@@ -75,7 +75,7 @@ st.markdown("""
 
 # Load the model
 try:
-    modelo = joblib.load("algorit/rf_hp.pkl")
+    modelo = joblib.load("Algorit/rf_hp.pkl")
 except:
     st.error("⚠️ Error: No se pudo cargar el modelo. Verifique que el archivo 'rf_hp.pkl' existe en la carpeta 'algoritmos'.")
     st.stop()
