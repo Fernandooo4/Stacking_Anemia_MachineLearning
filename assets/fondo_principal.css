@@ -1,0 +1,108 @@
+/* fondo.css */
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(
+        120deg,
+        #c1cae9 0%,
+        #c5c3e0 25%,
+        #d3caeb 50%,
+        #c6caeb 75%,
+        #bcbff1 100%
+    );
+    background-size: 300% 300%;
+    background-attachment: fixed;
+    animation: gradientMove 13s ease infinite;
+    position: fixed;  /* Cambiado de relative a fixed */
+    top: 0;  /* Añadido */
+    left: 0;  /* Añadido */
+    width: 100%;  /* Añadido */
+    height: 100%;  /* Cambiado de auto a 100% */
+}
+
+[data-testid="stAppViewContainer"] > .main {
+    height: 100% !important;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+[data-testid="stHeader"] {
+    background: transparent;
+    position: relative;
+    z-index: 2;
+}
+
+/* Ajustado el pseudo-elemento */
+[data-testid="stAppViewContainer"]::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 150%,
+        rgba(255, 255, 255, 0.2) 5%,
+        transparent 10%),
+        radial-gradient(circle at 20% 130%,
+        rgba(255, 255, 255, 0.2) 8%,
+        transparent 15%),
+        radial-gradient(circle at 180% 20%,
+        rgba(255, 255, 255, 0.2) 10%,
+        transparent 20%),
+        radial-gradient(circle at 30% 70%,
+        rgba(255, 255, 255, 0.2) 15%,
+        transparent 25%),
+        radial-gradient(circle at 70% 60%,
+        rgba(255, 255, 255, 0.2) 12%,
+        transparent 22%);
+    background-size: 100% 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Ajuste para el texto */
+[data-testid="stMarkdown"] {
+    color: #680404 !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Asegurar que el contenido principal sea scrolleable */
+.main .block-container {
+    overflow-y: auto !important;
+    max-height: none !important;
+}
+/* Ocultar footer */
+footer {
+    visibility: hidden;
+}
+
+
+
+
+
+
+
+/* xDDD */
+
+/* Estilo para la barra lateral */
+[data-testid="stSidebar"] {
+    background-color: rgba(46, 55, 136, 0.1);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(12, 12, 12, 0.1);
+    padding: 20px;
+    position: relative;
+    min-height: 100vh;
+}
+
