@@ -180,7 +180,7 @@ with col15:
     st.image("imagenes/robot.png", width= 670)
 
 
-col16, col17, col18 = st.columns([3,3,3], gap="small", vertical_alignment="center")
+col16, col17, col18 = st.columns([3,10,3], gap="small", vertical_alignment="center")
 
 with col17:
-    st.image("imagenes/gas.png", width = 1300)
+    st.image("imagenes/gas.png", width = 1780)
