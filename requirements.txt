@@ -1,2 +1,5 @@
 joblib
 reportlab
+scikit-learn
+numpy
+pandas
