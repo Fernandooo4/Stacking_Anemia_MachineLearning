@@ -183,4 +183,4 @@ with col15:
 col16, col17, col18 = st.columns([3,3,3], gap="small", vertical_alignment="center")
 
 with col17:
-    st.image("imagenes/gas.png", width = 6000)
+    st.image("imagenes/gas.png", width = 1300)
