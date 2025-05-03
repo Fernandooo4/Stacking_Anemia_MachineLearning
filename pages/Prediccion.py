@@ -147,10 +147,13 @@ st.markdown(
 # Layout en columnas
 col1, col2 = st.columns(2)
 with col1:
-    st.markdown('<div class="custom-header">📋 Datos Personales</div>', unsafe_allow_html=True)
+    st.markdown('<div class="custom-header">🔴 Glóbulos Rojos</div>', unsafe_allow_html=True)
     with st.expander("Completa tus datos personales", expanded=True):
-        age = st.slider("Edad", min_value=0, max_value=110, value=30, step=1)
+        age = st.slider("Conteo de glóbulos rojos (RBC), millones/µL", min_value=0, max_value=110, value=30, step=1)
         sex = st.selectbox("Género", ["Masculino", "Femenino"])
+        
+        # Cuadro de texto adicional
+        additional_info = st.text_input("Información adicional", "Escribe algo aquí")
 
 # Sección de parámetros hematológicos
 with col2:
