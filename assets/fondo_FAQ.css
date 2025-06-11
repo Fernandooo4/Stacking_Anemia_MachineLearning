@@ -1,21 +1,21 @@
-
+/* background.css */
 [data-testid="stAppViewContainer"] {
     background: linear-gradient(
         120deg,
-        #abecee 0%,
-        #c0eaf1 25%,
-        #b8e4e6 50%,
-        #b2dcdd 75%,
-        #a8e3e7 100%
+        #eaf6fb 0%,
+        #c7e9f1 25%,
+        #a1d4e8 50%,
+        #c7e9f1 75%,
+        #eaf6fb 100%
     );
     background-size: 300% 300%;
     background-attachment: fixed;
     animation: gradientMove 13s ease infinite;
-    position: fixed;  /* Cambiado de relative a fixed */
-    top: 0;  /* Añadido */
-    left: 0;  /* Añadido */
-    width: 100%;  /* Añadido */
-    height: 100%;  /* Cambiado de auto a 100% */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 [data-testid="stAppViewContainer"] > .main {
@@ -31,7 +31,6 @@
     z-index: 2;
 }
 
-/* Ajustado el pseudo-elemento */
 [data-testid="stAppViewContainer"]::before {
     content: '';
     position: fixed;
@@ -71,28 +70,102 @@
     }
 }
 
-/* Ajuste para el texto */
 [data-testid="stMarkdown"] {
-    color: #680404 !important;
+    color: #1f2c3b !important;
     position: relative;
     z-index: 1;
 }
 
-/* Asegurar que el contenido principal sea scrolleable */
 .main .block-container {
     overflow-y: auto !important;
     max-height: none !important;
 }
-/* Ocultar footer */
+
 footer {
     visibility: hidden;
 }
 
-/* Estilo para la barra lateral */
 [data-testid="stSidebar"] {
-    background-color: rgba(83, 149, 204, 0.1);
+    background-color: rgba(199, 233, 241, 0.2);
     backdrop-filter: blur(10px);
     border-right: 1px solid rgba(12, 12, 12, 0.1);
 }
 
+[data-testid="stSlider"] {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 
+[data-testid="stSlider"] > div > div > div > div > div > div {
+    background: #a1d4e8 !important;
+    border: 2px solid #ffffff !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 10px rgba(161, 212, 232, 0.5) !important;
+    transition: all 0.3s ease !important;
+}
+
+[data-testid="stSlider"] > div > div > div > div > div > div:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(161, 212, 232, 0.8) !important;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+[data-testid="stSlider"] > div > div > div > div > div > div:active {
+    animation: pulse 1s infinite;
+}
+
+h1, h2, h3 {
+    color: #1f2c3b !important;
+    font-size: 2em !important;
+    font-weight: bold !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+[data-testid="stSelectbox"] {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.stButton > button {
+    background-color: #a1d4e8 !important;
+    color: white !important;
+    border-radius: 20px !important;
+    padding: 0.5rem 2rem !important;
+    font-size: 1.2em !important;
+    border: none !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.2) !important;
+}
+
+.stTextInput > div > div > input,
+.stSelectInput > div > div > input {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1.1em;
+}
+
+.stSlider, .stSelectbox, .stButton > button {
+    transition: all 0.3s ease;
+}
+
+.stSlider:hover, .stSelectbox:hover {
+    transform: translateY(-2px);
+}

@@ -2,20 +2,20 @@
 [data-testid="stAppViewContainer"] {
     background: linear-gradient(
         120deg,
-        #ffebee 0%,
-        #ffcdd2 25%,
-        #cfacac 50%,
-        #ffcdd2 75%,
-        #ffcdd2 100%
+        #f3fbf6 0%,
+        #d8f6e3 25%,
+        #b2ebc5 50%,
+        #d8f6e3 75%,
+        #f3fbf6 100%
     );
     background-size: 300% 300%;
     background-attachment: fixed;
     animation: gradientMove 13s ease infinite;
-    position: fixed;  /* Cambiado de relative a fixed */
-    top: 0;  /* Añadido */
-    left: 0;  /* Añadido */
-    width: 100%;  /* Añadido */
-    height: 100%;  /* Cambiado de auto a 100% */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 [data-testid="stAppViewContainer"] > .main {
@@ -31,7 +31,6 @@
     z-index: 2;
 }
 
-/* Ajustado el pseudo-elemento */
 [data-testid="stAppViewContainer"]::before {
     content: '';
     position: fixed;
@@ -40,19 +39,19 @@
     right: 0;
     bottom: 0;
     background: radial-gradient(circle at 50% 150%,
-        rgba(255, 255, 255, 0.2) 5%,
+        rgba(255, 255, 255, 0.15) 5%,
         transparent 10%),
         radial-gradient(circle at 20% 130%,
-        rgba(255, 255, 255, 0.2) 8%,
+        rgba(255, 255, 255, 0.15) 8%,
         transparent 15%),
         radial-gradient(circle at 180% 20%,
-        rgba(255, 255, 255, 0.2) 10%,
+        rgba(255, 255, 255, 0.15) 10%,
         transparent 20%),
         radial-gradient(circle at 30% 70%,
-        rgba(255, 255, 255, 0.2) 15%,
+        rgba(255, 255, 255, 0.15) 15%,
         transparent 25%),
         radial-gradient(circle at 70% 60%,
-        rgba(255, 255, 255, 0.2) 12%,
+        rgba(255, 255, 255, 0.15) 12%,
         transparent 22%);
     background-size: 100% 100%;
     pointer-events: none;
@@ -71,31 +70,27 @@
     }
 }
 
-/* Ajuste para el texto */
 [data-testid="stMarkdown"] {
-    color: #680404 !important;
+    color: #388e3c !important;
     position: relative;
     z-index: 1;
 }
 
-/* Asegurar que el contenido principal sea scrolleable */
 .main .block-container {
     overflow-y: auto !important;
     max-height: none !important;
 }
-/* Ocultar footer */
+
 footer {
     visibility: hidden;
 }
 
-/* Estilo para la barra lateral */
 [data-testid="stSidebar"] {
-    background-color: rgba(197, 21, 36, 0.1);
+    background-color: rgba(210, 250, 220, 0.2);
     backdrop-filter: blur(10px);
     border-right: 1px solid rgba(12, 12, 12, 0.1);
 }
 
-/* Estilo mejorado para los sliders */
 [data-testid="stSlider"] {
     padding: 2rem;
     background: rgba(255, 255, 255, 0.2);
@@ -104,26 +99,21 @@ footer {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* Personalización del thumb (la bolita del slider) */
 [data-testid="stSlider"] > div > div > div > div > div > div {
-    background: #f11b1b !important;
+    background: #a5d6a7 !important;
     border: 2px solid white !important;
     width: 20px !important;
     height: 20px !important;
     border-radius: 50% !important;
-    box-shadow: 0 0 10px rgba(241, 27, 27, 0.5) !important;
+    box-shadow: 0 0 10px rgba(165, 214, 167, 0.5) !important;
     transition: all 0.3s ease !important;
 }
 
-/* Efecto hover en el thumb */
 [data-testid="stSlider"] > div > div > div > div > div > div:hover {
     transform: scale(1.2);
-    box-shadow: 0 0 15px rgba(241, 27, 27, 0.8) !important;
+    box-shadow: 0 0 15px rgba(165, 214, 167, 0.8) !important;
 }
 
-
-
-/* Animación de pulso para el thumb */
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
@@ -134,15 +124,13 @@ footer {
     animation: pulse 1s infinite;
 }
 
-/* Estilos para los textos */
 h1, h2, h3 {
-    color: #2c1810 !important;
+    color: #2e7d32 !important;
     font-size: 2em !important;
     font-weight: bold !important;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Estilo para los selectbox */
 [data-testid="stSelectbox"] {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
@@ -150,10 +138,9 @@ h1, h2, h3 {
     margin: 1rem 0;
 }
 
-/* Estilo para los botones */
 .stButton > button {
-    background-color: #f11b1b !important;
-    color: white !important;
+    background-color: #a5d6a7 !important;
+    color: #1b5e20 !important;
     border-radius: 20px !important;
     padding: 0.5rem 2rem !important;
     font-size: 1.2em !important;
@@ -167,7 +154,6 @@ h1, h2, h3 {
     box-shadow: 0 6px 8px rgba(0,0,0,0.2) !important;
 }
 
-/* Estilo para los widgets en general */
 .stTextInput > div > div > input,
 .stSelectInput > div > div > input {
     background-color: white;
@@ -176,7 +162,6 @@ h1, h2, h3 {
     font-size: 1.1em;
 }
 
-/* Animación suave para los elementos interactivos */
 .stSlider, .stSelectbox, .stButton > button {
     transition: all 0.3s ease;
 }
@@ -184,4 +169,3 @@ h1, h2, h3 {
 .stSlider:hover, .stSelectbox:hover {
     transform: translateY(-2px);
 }
-

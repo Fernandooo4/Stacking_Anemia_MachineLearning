@@ -38,24 +38,31 @@ project_3_page = st.Page(
     icon = ":material/quiz:",
     default = True,
 )
+
 about_page = st.Page(
     page = "pages/Prediccion.py",
     title = "Predicción 🩸",
     icon = ":material/bloodtype:",
 )
-project_1_page = st.Page(
-    page = "pages/Subir_archivo_CSV.py",
-    title = "Subir archivo CSV 🗂️",
-    icon = ":material/description:",
-)
+
 project_2_page = st.Page(
     page = "pages/FAQ.py",
     title = "Preguntas ❓",
     icon = ":material/contact_support:",
 )
 
-# Menu navegación
-pg = st.navigation(pages=[project_3_page, about_page, project_1_page, project_2_page])
+# Página de subir CSV eliminada
+# project_1_page = st.Page(
+#     page = "pages/Subir_archivo_CSV.py",
+#     title = "Subir archivo CSV 🗂️",
+#     icon = ":material/description:",
+# )
+
+# Menú de navegación
+pg = st.navigation(pages=[project_3_page, about_page, project_2_page])
+
+# Menu navegaciin, poner esto en vez del de arriba.
+#pg = st.navigation(pages=[project_3_page, about_page, project_1_page, project_2_page])
 
 # Run navegación
 pg.run()

@@ -1,3 +1,4 @@
+import joblib  # o import pickle si tu modelo está con pickle
 import streamlit as st
 import pandas as pd
 import joblib  # Para cargar el modelo guardado
@@ -13,122 +14,99 @@ import matplotlib.pyplot as plt
 # Función para cargar el archivo CSS de fondo
 with open("assets/background.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-modelo = joblib.load("Algorit/lightgbm_hp.pkl") 
-
-
-#  Cargando el MODELO ENTRENADOO
 try:
-    modelo = joblib.load("Algorit/lightgbm_hp.pkl") 
-except:
-    st.error("⚠️ Error: No se pudo cargar el modelo. Verifique que el archivo 'lightgbm_hp.pkl' existe en la carpeta 'algoritmos'.")
+    modelo_data = joblib.load("Algorit/modelo_con_todo.pkl")
+    modelo = modelo_data["modelo"]
+    label_encoder = modelo_data["label_encoder"]
+#    Ya es el modelo directamente
+
+
+except Exception as e:
+    st.error(f"⚠️ Error: No se pudo cargar el modelo. Detalles: {str(e)}")
     st.stop()
 
-##TITULO 
 # ESTETICA TITULO
 st.markdown("""
     <style>
-        /* Modificar la tipografía del título con efecto llamativo */
         .title {
             font-family: 'Segoe UI Black', 'Times New Roman', sans-serif; 
-            font-size: 63px; /* Tamaño del título */
-            color: #713232; /* Color del texto */
-            text-align: center; /* Centrar el título */
-            margin-top: 1px; /* Mover el título un poco más arriba */
-            animation: colorChange 3s infinite, shadowEffect 3s ease-in-out infinite; /* Animación */
+            font-size: 63px;
+            color: #1b5e20;
+            text-align: center;
+            margin-top: 1px;
+            animation: colorChange 3s infinite, shadowEffect 3s ease-in-out infinite;
         }
 
-        /* Efecto de cambio de color en el título */
         @keyframes colorChange {
-            0% { color: #713232; }
-            50% { color: #b13131; }
-            100% { color: #713232; }
+            0% { color: #1b5e20; }
+            50% { color: #255d27; }
+            100% { color: #1b5e20; }
         }
 
-        /* Efecto de sombra en el título */
         @keyframes shadowEffect {
-            0% { text-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3); }
-            50% { text-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3); }
-            100% { text-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3); }
+            0% { text-shadow: 0 0 5px rgba(27, 94, 32, 0.3), 0 0 10px rgba(27, 94, 32, 0.2); }
+            50% { text-shadow: 0 0 8px rgba(27, 94, 32, 0.3), 0 0 16px rgba(27, 94, 32, 0.2); }
+            100% { text-shadow: 0 0 5px rgba(27, 94, 32, 0.3), 0 0 10px rgba(27, 94, 32, 0.2); }
         }
     </style>
-    <div class="title">🩺 PREDICCIÓN DE ANEMIA USANDO EL ALGORITMO DECISION TREE</div>
-    </div>
+    <div class="title">🩺 PREDICCIÓN DEL TIPO DE ANEMIA CON STACKING ENSEMBLE</div>
 """, unsafe_allow_html=True)
 
 
-# Seccion de GLOBULOS ROJOS
+# Carga del modelo previamente entrenado
+
+
+# Interfaz de entrada"Algorit/modelo_con_todo.pkl"
 col1, col2 = st.columns(2)
+
 with col1:
-    st.markdown('<div class="custom-header">🔴 Glóbulos Rojos</div>', unsafe_allow_html=True)
+    st.markdown('<div class="custom-header">🔴 Glóbulos Rojos</div>',
+                unsafe_allow_html=True)
     with st.expander("Por favor Ingrese los valores", expanded=True):
-        rbc = st.number_input(
-            "RBC (Glóbulos rojos) [×10⁶/µL]",
-            min_value=1.36, max_value=90.80, value=5.0, step=0.1, format="%.2f"
-        )
-        
-        hgb = st.number_input(
-            "HGB (Hemoglobina) [g/dL]",
-            min_value=-10.00, max_value=87.10, value=14.0, step=0.1, format="%.2f"
-        )
-        
-        hct = st.number_input(
-            "HCT (Hematocrito) [%]",
-            min_value=2.00, max_value=3715.00, value=42.0, step=0.1, format="%.2f"
-        )
+        rbc = st.number_input("RBC (×10⁶/µL)", min_value=1.36,
+                              max_value=90.80, value=5.0, step=0.1)
+        hgb = st.number_input("HGB (g/dL)", min_value=0.00,
+                              max_value=87.10, value=14.0, step=0.1)
+        hct = st.number_input("HCT (%)", min_value=2.00,
+                              max_value=3715.00, value=42.0, step=0.1)
 
-
-# Sección de GLOBULOS BLANCOS
 with col2:
-    st.markdown('<div class="custom-header">⚪ Glóbulos Blancos</div>', unsafe_allow_html=True)
+    st.markdown('<div class="custom-header">⚪ Glóbulos Blancos</div>',
+                unsafe_allow_html=True)
     with st.expander("Por favor Ingrese los valores", expanded=True):
-        wbc = st.number_input(
-            "WBC (Glóbulos blancos) [×10³/µL]",
-            min_value=0.80, max_value=45.70, value=7.0, step=0.1, format="%.2f"
-        )
-        
-        lymp = st.number_input(
-            "LYM% (Porcentaje de linfocitos) [%]",
-            min_value=6.20, max_value=91.40, value=30.0, step=0.1, format="%.2f"
-        )
-        
+        wbc = st.number_input("WBC (×10³/µL)", min_value=0.80,
+                              max_value=45.70, value=7.0, step=0.1)
+        lymp = st.number_input("LYM% (%)", min_value=6.20,
+                               max_value=91.40, value=30.0, step=0.1)
         neutp = st.number_input(
-            "NEUT% (Porcentaje de neutrófilos) [%]",
-            min_value=0.70, max_value=5317.00, value=60.0, step=0.1, format="%.2f"
-        )
-        
+            "NEUT% (%)", min_value=0.70, max_value=5317.00, value=60.0, step=0.1)
         lymn = st.number_input(
-            "LYM# (Linfocitos absolutos) [×10³/µL]",
-            min_value=0.20, max_value=41.80, value=2.0, step=0.1, format="%.2f"
-        )
-        
+            "LYM# (×10³/µL)", min_value=0.20, max_value=41.80, value=2.0, step=0.1)
         neutn = st.number_input(
-            "NEUT# (Neutrófilos absolutos) [×10³/µL]",
-            min_value=0.50, max_value=44.00, value=4.0, step=0.1, format="%.2f"
-        )
+            "NEUT# (×10³/µL)", min_value=0.50, max_value=44.00, value=4.0, step=0.1)
 
-
-# Parámetros Índices Eritrocitarios y Parámetros Plaquetarios 
-st.markdown('<div class="custom-header">🧪 Índices Eritrocitarios y Parámetros Plaquetarios </div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-header">🧪 Índices Eritrocitarios y Parámetros Plaquetarios </div>',
+            unsafe_allow_html=True)
 with st.expander("Por favor Ingrese los valores", expanded=True):
     col3, col4 = st.columns(2)
-
     with col3:
-        mcv = st.number_input("Volumen corpuscular medio (MCV), fL", min_value=-79.30, max_value=122.10, value=90.0, step=0.1)
-        mch = st.number_input("Hemoglobina corpuscular media (MCH), pg", min_value=11.40, max_value=3117.00, value=30.0, step=0.1)
-        mchc = st.number_input("Concentración de hemoglobina corpuscular media (MCHC), g/dL", min_value=11.50, max_value=92.80, value=33.0, step=0.1)
-
+        mcv = st.number_input("MCV (fL)", min_value=0.0,
+                              max_value=122.10, value=90.0, step=0.1)
+        mch = st.number_input("MCH (pg)", min_value=11.40,
+                              max_value=3117.00, value=30.0, step=0.1)
+        mchc = st.number_input(
+            "MCHC (g/dL)", min_value=11.50, max_value=92.80, value=33.0, step=0.1)
     with col4:
-        plt = st.number_input("Plaquetas (PLT), miles/µL", min_value=11.30, max_value=660.00, value=250.0, step=1.0)
-        pdw = st.number_input("Distribución plaquetaria (PDW), %", min_value=8.40, max_value=29.20, value=14.0, step=0.1)
-        pct = st.number_input("Plaquetocrito (PCT), %", min_value=0.01, max_value=13.60, value=2.0, step=0.1)
+        plt = st.number_input("PLT (miles/µL)", min_value=11.30,
+                              max_value=660.00, value=250.0, step=1.0)
+        pdw = st.number_input("PDW (%)", min_value=8.40,
+                              max_value=29.20, value=14.0, step=0.1)
+        pct = st.number_input("PCT (%)", min_value=0.01,
+                              max_value=13.60, value=2.0, step=0.1)
 
-
-import pytz
-from datetime import datetime
-
+# Botón para predecir
 if st.button("🔍 Realizar Predicción"):
     try:
-        # Crear DataFrame de entrada con los parámetros correctos
         datos_entrada = pd.DataFrame({
             'WBC': [wbc],
             'LYMp': [lymp],
@@ -137,16 +115,15 @@ if st.button("🔍 Realizar Predicción"):
             'NEUTn': [neutn],
             'RBC': [rbc],
             'HGB': [hgb],
-            'HCT': [hct],  
+            'HCT': [hct],
             'MCV': [mcv],
             'MCH': [mch],
             'MCHC': [mchc],
             'PLT': [plt],
-            'PDW': [pdw],  
-            'PCT': [pct]   
+            'PDW': [pdw],
+            'PCT': [pct]
         })
 
-        # Definir las clases en el orden correcto
         clases = [
             'Healthy',
             'Iron deficiency anemia',
@@ -156,57 +133,42 @@ if st.button("🔍 Realizar Predicción"):
             'Other microcytic anemia'
         ]
 
-        # Predicción
-        prediccion = modelo.predict(datos_entrada)[0]
+        prediccion_codificada = modelo.predict(datos_entrada)
+        prediccion = label_encoder.inverse_transform(prediccion_codificada)[0]
 
-        # Obtener la fecha y hora actual en la zona horaria de Perú (GMT-5)
-        peru_tz = pytz.timezone('America/Lima')
-        fecha_hora_actual = datetime.now(peru_tz).strftime("%d/%m/%Y %H:%M:%S")
 
-        # Función para crear PDF
+        fecha_hora_actual = datetime.now(pytz.timezone(
+            'America/Lima')).strftime("%d/%m/%Y %H:%M:%S")
+
         def crear_pdf(fecha_hora_actual):
             buffer = BytesIO()
             c = canvas.Canvas(buffer, pagesize=letter)
             c.setFont("Helvetica", 14)
-            c.drawString(100, 750, f"Glóbulos Blancos (WBC): {wbc} [×10³/µL]")
-            c.drawString(100, 735, f"Linfocitos (%): {lymp} [%]")
-            c.drawString(100, 720, f"Neutrófilos (%): {neutp} [%]")
-            c.drawString(100, 705, f"Linfocitos Absolutos (LYM#): {lymn} [×10³/µL]")
-            c.drawString(100, 690, f"Neutrófilos Absolutos (NEUT#): {neutn} [×10³/µL]")
-            c.drawString(100, 675, f"RBC: {rbc}")
-            c.drawString(100, 660, f"Hemoglobina (HGB): {hgb}")
-            c.drawString(100, 645, f"HCT: {hct}")  
-            c.drawString(100, 630, f"MCV: {mcv}")
-            c.drawString(100, 615, f"MCH: {mch}")
-            c.drawString(100, 600, f"MCHC: {mchc}")
-            c.drawString(100, 585, f"PLT: {plt}")
-            c.drawString(100, 570, f"PDW: {pdw}")  
-            c.drawString(100, 555, f"PCT: {pct}")
-            c.drawString(100, 540, f"Resultado de Predicción: {prediccion}")
-            c.drawString(100, 520, f"Fecha y hora del diagnóstico: {fecha_hora_actual}")
+            y = 750
+            for label, val in [
+                ("WBC", wbc), ("LYM%", lymp), ("NEUT%", neutp), ("LYM#", lymn),
+                ("NEUT#", neutn), ("RBC", rbc), ("HGB", hgb), ("HCT", hct),
+                ("MCV", mcv), ("MCH", mch), ("MCHC", mchc), ("PLT", plt),
+                ("PDW", pdw), ("PCT", pct), ("Diagnóstico", prediccion),
+                ("Fecha y hora", fecha_hora_actual)
+            ]:
+                c.drawString(100, y, f"{label}: {val}")
+                y -= 15
             c.save()
             buffer.seek(0)
             return buffer
 
-        # Crear PDF
         pdf_buffer = crear_pdf(fecha_hora_actual)
-
-        # Convertir el PDF a base64
         pdf_base64 = base64.b64encode(pdf_buffer.read()).decode()
 
-        # Mostrar resultado personalizado
         if prediccion == "Healthy":
-            st.markdown(f"""<div class="zoom-bounce" style="background-color: #E6FFE6; color: #1E8449; font-weight: bold; 
-                            padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 2px solid #468c27; text-align: center; font-size: 
-                            20px; font-family: 'Times New Roman', Times New Roman; width: 100%; display: inline-block;">✅ Diagnóstico: {prediccion}</div>""", unsafe_allow_html=True)
+            st.markdown(f"""<div style="background-color:#E6FFE6;color:#1E8449;padding:1rem;border-radius:8px;
+            border:2px solid #468c27;text-align:center;font-size:20px;">✅ Diagnóstico: {prediccion}</div>""", unsafe_allow_html=True)
         else:
-            st.markdown(f"""<div class="zoom-bounce" style="background-color: #ea9999; color: #B03A2E; font-weight: 
-                            bold; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border: 2px solid #E74C3C; text-align: 
-                            center; font-size: 20px; font-family: 'Times New Roman', Times New Roman; width: 100%; display: inline-block;">
-                            ⚠️ Diagnóstico: {prediccion}</div>""", unsafe_allow_html=True)
+            st.markdown(f"""<div style="background-color:#FDEDEC;color:#B03A2E;padding:1rem;border-radius:8px;
+            border:2px solid #E74C3C;text-align:center;font-size:20px;">⚠️ Diagnóstico: {prediccion}</div>""", unsafe_allow_html=True)
 
-        # Estilos CSS personalizados para el botón de descarga
-        st.markdown(""" 
+        st.markdown("""
             <style>
                 .custom-btn {
                     font-size: 18px;
@@ -216,9 +178,6 @@ if st.button("🔍 Realizar Predicción"):
                     border-radius: 8px;
                     border: none;
                     cursor: pointer;
-                    text-align: center;
-                    display: inline-block;
-                    margin: 10px;
                     margin-top: 5px;
                 }
                 .custom-btn:hover {
@@ -227,30 +186,19 @@ if st.button("🔍 Realizar Predicción"):
             </style>
         """, unsafe_allow_html=True)
 
-        # Columnas para disposición
         col_pred, col_descarga = st.columns([2.3, 1])
         with col_descarga:
-            st.markdown(""" 
-                <a href="data:application/pdf;base64,{}" download="resultado_prediccion.pdf">
-                    <button class="custom-btn">📥 Descargar informe </button>
+            st.markdown(f"""
+                <a href="data:application/pdf;base64,{pdf_base64}" download="resultado_prediccion.pdf">
+                    <button class="custom-btn">📥 Descargar informe</button>
                 </a>
-            """.format(pdf_base64), unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
     except Exception as e:
-        st.error(f"❌ Error al realizar la predicción: {str(e)}")
-        
+        st.error(f"❌ Error al realizar la predicción: {e}")
 
 
-
-
-
-
-
-
-
-
-
-# TODOOO LO DE ABAJO ES PURO ESTETICA!!!       
+# TODOOO LO DE ABAJO ES PURO ESTETICA!!!
 # Custom CSS for styling
 st.markdown("""
     <style>
@@ -307,7 +255,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-
 # Insertar CSS personalizado
 st.markdown(
     """
@@ -340,7 +287,3 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-
-
-
