@@ -13,14 +13,14 @@ import matplotlib.pyplot as plt
 # Función para cargar el archivo CSS de fondo
 with open("assets/background.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-modelo = joblib.load("Algorit/kart_hp.pkl") 
+modelo = joblib.load("Algorit/lightgbm_hp.pkl") 
 
 
 #  Cargando el MODELO ENTRENADOO
 try:
-    modelo = joblib.load("Algorit/kart_hp.pkl") 
+    modelo = joblib.load("Algorit/lightgbm_hp.pkl") 
 except:
-    st.error("⚠️ Error: No se pudo cargar el modelo. Verifique que el archivo 'kart_hp.pkl' existe en la carpeta 'algoritmos'.")
+    st.error("⚠️ Error: No se pudo cargar el modelo. Verifique que el archivo 'lightgbm_hp.pkl' existe en la carpeta 'algoritmos'.")
     st.stop()
 
 ##TITULO 

@@ -9,3 +9,5 @@ streamlit==1.40.1
 matplotlib
 pytz
 pytorch-tabnet
+lightgbm
+xgboost
